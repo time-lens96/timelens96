@@ -1,0 +1,2443 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TimeLens - Modern Fotoğraf Stüdyosu</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet"/>
+<style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #e74c3c;
+            --accent-color: #3498db;
+            --text-color: #2c3e50;
+            --light-bg: #f8f9fa;
+            --dark-bg: #2c3e50;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 16px;
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand {
+    font-family: 'Segoe UI Semibold', sans-serif;
+    font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .nav-link {
+    font-family: 'Segoe UI Semibold', sans-serif;
+    font-size: 1rem;
+            color: var(--primary-color);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-color);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Home Section */
+        .home-section {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+                        url('https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero-title {
+    font-size: 4rem;
+    font-weight: 800;
+    color: white;
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.6);
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero-subtitle {
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: #f1f1f1;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        /* Portfolio Section */
+        .portfolio-section {
+            padding: 5rem 0;
+            background: var(--light-bg);
+        }
+
+        .portfolio-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: all 0.3s ease;
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            padding: 20px;
+            color: white;
+            transform: translateY(100%);
+            transition: all 0.3s ease;
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            transform: translateY(0);
+        }
+
+        /* Services Section */
+        .services-section {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary-color);
+            background: linear-gradient(45deg, var(--secondary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .service-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .service-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-price {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+        }
+
+        .service-features {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 1.5rem 0;
+        }
+
+        .service-features li {
+            padding: 0.5rem 0;
+            color: #666;
+            display: flex;
+            align-items: center;
+        }
+
+        .service-features li i {
+            color: var(--accent-color);
+            margin-right: 0.5rem;
+        }
+
+        .favorite-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .favorite-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .favorite-btn i {
+            color: #ffd700;
+            font-size: 1.2rem;
+        }
+
+        /* Profile Section */
+        .profile-section {
+            padding: 5rem 0;
+            background: var(--light-bg);
+            min-height: 100vh;
+        }
+
+        .profile-header {
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 3rem 0;
+            margin-bottom: 2rem;
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.1;
+        }
+
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-avatar-upload {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            padding: 0.5rem;
+            text-align: center;
+            cursor: pointer;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .profile-avatar:hover .profile-avatar-upload {
+            opacity: 1;
+        }
+
+        .profile-avatar-upload i {
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .profile-name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .profile-email {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .profile-tabs {
+            background: white;
+            border-radius: 15px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .profile-tab {
+            padding: 1rem 2rem;
+            border: none;
+            background: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .profile-tab::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--secondary-color);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .profile-tab:hover::after,
+        .profile-tab.active::after {
+            width: 100%;
+        }
+
+        .profile-tab.active {
+            color: var(--secondary-color);
+        }
+
+        .profile-content {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .profile-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .form-control {
+            border: 2px solid #eee;
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 10px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 10px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Modal Styles */
+        .modal-content {
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .modal-header {
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            color: white;
+            border-radius: 15px 15px 0 0;
+            border: none;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .form-control {
+            border: 2px solid #eee;
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+        }
+
+        .btn-close {
+            color: white;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-title {
+    font-size: 4rem;
+    font-weight: 800;
+    color: white;
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.6);
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: #f1f1f1;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+                font-size: 1.2rem;
+            }
+
+            .profile-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .profile-tabs {
+                flex-direction: column;
+            }
+
+            .profile-tab {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        /* Animation Classes */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--accent-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Hizmet Kartları Stilleri */
+        .service-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary-color);
+            background: linear-gradient(45deg, var(--secondary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Müşteri Yorumları Stilleri */
+        .testimonial-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            height: 100%;
+        }
+
+        .testimonial-content {
+            margin-bottom: 1.5rem;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .testimonial-author img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            margin-right: 1rem;
+        }
+
+        .author-info h5 {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .author-info p {
+            margin: 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Özellik İkonları */
+        .feature-icon {
+            color: var(--accent-color);
+        }
+
+        /* Modal Stilleri */
+        .modal-content {
+            border-radius: 15px;
+        }
+
+        .modal-header {
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            color: white;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-body img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+
+        /* Takvim Stilleri */
+        .calendar-container {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .calendar-grid {
+            display: grid;
+            gap: 5px;
+        }
+
+        .calendar-weekdays {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .calendar-day:hover {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .calendar-day.available {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .calendar-day.booked {
+            background: #ffebee;
+            color: #c62828;
+            cursor: not-allowed;
+        }
+
+        /* Fiyat Tablosu Stilleri */
+        .pricing-comparison {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .table {
+            margin-bottom: 0;
+        }
+
+        .table th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 500;
+        }
+
+        .table td, .table th {
+            padding: 1rem;
+            vertical-align: middle;
+        }
+
+        /* SSS Stilleri */
+        .accordion-item {
+            border: none;
+            margin-bottom: 1rem;
+        }
+
+        .accordion-button {
+            background: white;
+            border-radius: 10px !important;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .accordion-button:not(.collapsed) {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .accordion-body {
+            background: white;
+            border-radius: 0 0 10px 10px;
+            padding: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top">
+<div class="container">
+<a class="navbar-brand" href="#" style="font-weight:700;font-size:2rem;background:linear-gradient(90deg,#e74c3c,#3498db,#2ecc71,#f1c40f);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">TimeLens</a>
+<button class="navbar-toggler" data-bs-target="#navbarNav" data-bs-toggle="collapse" type="button">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="navbarNav">
+<ul class="navbar-nav ms-auto">
+<li class="nav-item">
+<a class="nav-link" data-page="home" href="#">Ana Sayfa</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" data-page="portfolio" href="#">Portfolyo</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" data-page="services" href="#">Hizmetler</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" data-page="contact" href="#">İletişim</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" data-page="profile" href="#" id="profileLink" style="display: none;">Profil</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="#" id="loginBtn">Giriş Yap</a>
+</li>
+</ul>
+</div>
+</div>
+</nav>
+<!-- Main Content -->
+<main>
+<!-- Home Section -->
+<section class="home-section" id="home">
+<div class="hero-content">
+<h1 class="hero-title">Anlarınızı Yakalayın</h1>
+<p class="hero-subtitle">Özel günleriniz için profesyonel fotoğraf hizmetleri</p>
+<button class="btn btn-primary btn-lg" data-page="services">Hizmetlerimiz</button>
+</div>
+</section>
+<!-- Portfolio Section -->
+<section class="portfolio-section" id="portfolio" style="display: none;">
+<div class="container">
+<h2 class="text-center mb-5">Portfolyomuz</h2>
+<div class="row mb-4">
+<div class="col-12">
+<div class="portfolio-filters text-center">
+<button class="btn btn-outline-primary active" data-filter="all">Tümü</button>
+</div>
+</div>
+</div>
+<div class="row" id="portfolioItemsRow">
+<!-- Düğün Fotoğrafları -->
+<div class="col-md-4 mb-4 portfolio-item" data-category="wedding">
+<div class="portfolio-item position-relative">
+<button class="favorite-btn portfolio-fav-btn" style="position:absolute;top:1rem;right:1rem;z-index:2;"><i class="far fa-star"></i></button>
+<img alt="Düğün" src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4"/>
+<div class="portfolio-overlay"><h3>Düğün Fotoğrafçılığı</h3><p>Özel gününüzü yakalıyoruz</p></div>
+</div>
+</div>
+<div class="col-md-4 mb-4 portfolio-item" data-category="wedding">
+<div class="portfolio-item position-relative">
+<button class="favorite-btn portfolio-fav-btn" style="position:absolute;top:1rem;right:1rem;z-index:2;"><i class="far fa-star"></i></button>
+<img alt="Düğün" src="https://images.unsplash.com/photo-1519741497674-611481863552"/>
+<div class="portfolio-overlay"><h3>Düğün Detayları</h3><p>Unutulmaz anlar</p></div>
+</div>
+</div>
+<!-- Portre Fotoğrafları -->
+<div class="col-md-4 mb-4 portfolio-item" data-category="portrait">
+<div class="portfolio-item position-relative">
+<button class="favorite-btn portfolio-fav-btn" style="position:absolute;top:1rem;right:1rem;z-index:2;"><i class="far fa-star"></i></button>
+<img alt="Portre" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb"/>
+<div class="portfolio-overlay"><h3>Bireysel Portre</h3><p>Profesyonel portreler</p></div>
+</div>
+</div>
+<div class="col-md-4 mb-4 portfolio-item" data-category="portrait">
+<div class="portfolio-item position-relative">
+<button class="favorite-btn portfolio-fav-btn" style="position:absolute;top:1rem;right:1rem;z-index:2;"><i class="far fa-star"></i></button>
+<img alt="Portre" src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6"/>
+<div class="portfolio-overlay"><h3>Aile Portresi</h3><p>Aile anıları</p></div>
+</div>
+</div>
+<!-- Etkinlik Fotoğrafları -->
+<div class="col-md-4 mb-4 portfolio-item" data-category="event">
+<div class="portfolio-item position-relative">
+<button class="favorite-btn portfolio-fav-btn" style="position:absolute;top:1rem;right:1rem;z-index:2;"><i class="far fa-star"></i></button>
+<img alt="Etkinlik" src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622"/>
+<div class="portfolio-overlay"><h3>Kurumsal Etkinlikler</h3><p>Profesyonel etkinlikler</p></div>
+</div>
+</div>
+<div class="col-md-4 mb-4 portfolio-item" data-category="event">
+<div class="portfolio-item position-relative">
+<button class="favorite-btn portfolio-fav-btn" style="position:absolute;top:1rem;right:1rem;z-index:2;"><i class="far fa-star"></i></button>
+<img alt="Etkinlik" src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3"/>
+<div class="portfolio-overlay"><h3>Özel Kutlamalar</h3><p>Özel anlar</p></div>
+</div>
+</div>
+<!-- Doğa Fotoğrafları -->
+<div class="col-md-4 mb-4 portfolio-item" data-category="nature">
+<div class="portfolio-item position-relative">
+<button class="favorite-btn portfolio-fav-btn" style="position:absolute;top:1rem;right:1rem;z-index:2;"><i class="far fa-star"></i></button>
+<img alt="Doğa" src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05"/>
+<div class="portfolio-overlay"><h3>Manzara</h3><p>Doğanın güzelliği</p></div>
+</div>
+</div>
+<div class="col-md-4 mb-4 portfolio-item" data-category="nature">
+<div class="portfolio-item position-relative">
+<button class="favorite-btn portfolio-fav-btn" style="position:absolute;top:1rem;right:1rem;z-index:2;"><i class="far fa-star"></i></button>
+<img alt="Doğa" src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e"/>
+<div class="portfolio-overlay"><h3>Orman</h3><p>Doğal yaşam</p></div>
+</div>
+</div>
+<!-- Mimari Fotoğrafları -->
+<div class="col-md-4 mb-4 portfolio-item" data-category="architecture">
+<div class="portfolio-item position-relative">
+<button class="favorite-btn portfolio-fav-btn" style="position:absolute;top:1rem;right:1rem;z-index:2;"><i class="far fa-star"></i></button>
+<img alt="Mimari" src="https://images.unsplash.com/photo-1487958449943-2429e8be8625"/>
+<div class="portfolio-overlay"><h3>Modern Mimari</h3><p>Çağdaş tasarımlar</p></div>
+</div>
+</div>
+<div class="col-md-4 mb-4 portfolio-item" data-category="architecture">
+<div class="portfolio-item position-relative">
+<button class="favorite-btn portfolio-fav-btn" style="position:absolute;top:1rem;right:1rem;z-index:2;"><i class="far fa-star"></i></button>
+<img alt="Mimari" src="https://images.unsplash.com/photo-1486325212027-8081e485255e"/>
+<div class="portfolio-overlay"><h3>Tarihi Yapılar</h3><p>Kültürel miras</p></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sadece tüm fotoğrafları göster
+            document.querySelectorAll('#portfolioItemsRow > .portfolio-item').forEach(item => {
+                item.style.display = '';
+            });
+            // Sadece 'Tümü' butonunu aktif bırak
+            document.querySelectorAll('.portfolio-filters button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector('.portfolio-filters button[data-filter="all"]').classList.add('active');
+        });
+        </script>
+<!-- Services Section -->
+<section class="services-section" id="services" style="display: none;">
+<div class="container">
+<h2 class="text-center mb-5">Hizmetlerimiz</h2>
+<!-- Hizmet Kategorileri -->
+<div class="row mb-5">
+<div class="col-12">
+<div class="service-categories text-center">
+<button class="btn btn-outline-primary active" data-service="all">Tüm Hizmetler</button>
+<button class="btn btn-outline-primary" data-service="wedding">Düğün</button>
+<button class="btn btn-outline-primary" data-service="portrait">Portre</button>
+<button class="btn btn-outline-primary" data-service="event">Etkinlik</button>
+<button class="btn btn-outline-primary" data-service="commercial">Kurumsal</button>
+<button class="btn btn-outline-primary" data-service="video">Video</button>
+<button class="btn btn-outline-primary" data-service="drone">Drone</button>
+</div>
+</div>
+</div>
+<!-- Fiyat Karşılaştırma Tablosu: Düğün -->
+<div class="row mb-5 service-compare" data-service="wedding" style="display:none;">
+<div class="col-12">
+<div class="pricing-comparison">
+<h3 class="text-center mb-4">Düğün Paketi Karşılaştırma</h3>
+<div class="table-responsive">
+<table class="table table-hover">
+<thead>
+<tr>
+<th>Özellikler</th>
+<th>Standart</th>
+<th>Premium</th>
+<th>Lüks</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Çekim Süresi</td><td>4 Saat</td><td>8 Saat</td><td>12 Saat</td></tr>
+<tr><td>Fotoğraf Sayısı</td><td>100+</td><td>300+</td><td>500+</td></tr>
+<tr><td>Fotoğrafçı Sayısı</td><td>1</td><td>2</td><td>2</td></tr>
+<tr><td>Drone Çekimi</td><td><i class="fas fa-times text-danger"></i></td><td><i class="fas fa-check text-success"></i></td><td><i class="fas fa-check text-success"></i></td></tr>
+<tr><td>Online Galeri</td><td>3 Ay</td><td>6 Ay</td><td>1 Yıl</td></tr>
+<tr><td>Fotoğraf Albümü</td><td>20x30</td><td>30x40</td><td>40x60</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<!-- Fiyat Karşılaştırma Tablosu: Portre -->
+<div class="row mb-5 service-compare" data-service="portrait" style="display:none;">
+<div class="col-12">
+<div class="pricing-comparison">
+<h3 class="text-center mb-4">Portre Paketi Karşılaştırma</h3>
+<div class="table-responsive">
+<table class="table table-hover">
+<thead>
+<tr>
+<th>Özellikler</th>
+<th>Bireysel</th>
+<th>Aile</th>
+<th>Kurumsal</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Çekim Süresi</td><td>1 Saat</td><td>2 Saat</td><td>2 Saat</td></tr>
+<tr><td>Fotoğraf Sayısı</td><td>20</td><td>40</td><td>50</td></tr>
+<tr><td>Profesyonel Makyaj</td><td><i class="fas fa-check text-success"></i></td><td><i class="fas fa-check text-success"></i></td><td><i class="fas fa-times text-danger"></i></td></tr>
+<tr><td>Stüdyo Kullanımı</td><td><i class="fas fa-check text-success"></i></td><td><i class="fas fa-check text-success"></i></td><td><i class="fas fa-check text-success"></i></td></tr>
+<tr><td>Online Galeri</td><td>Var</td><td>Var</td><td>Var</td></tr>
+<tr><td>Baskı Seçenekleri</td><td>Opsiyonel</td><td>Opsiyonel</td><td>Opsiyonel</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<!-- Fiyat Karşılaştırma Tablosu: Etkinlik -->
+<div class="row mb-5 service-compare" data-service="event" style="display:none;">
+<div class="col-12">
+<div class="pricing-comparison">
+<h3 class="text-center mb-4">Etkinlik Paketi Karşılaştırma</h3>
+<div class="table-responsive">
+<table class="table table-hover">
+<thead>
+<tr>
+<th>Özellikler</th>
+<th>Standart</th>
+<th>Premium</th>
+<th>Lüks</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Çekim Süresi</td><td>2 Saat</td><td>4 Saat</td><td>8 Saat</td></tr>
+<tr><td>Fotoğraf Sayısı</td><td>50+</td><td>100+</td><td>200+</td></tr>
+<tr><td>Drone Çekimi</td><td><i class="fas fa-times text-danger"></i></td><td><i class="fas fa-check text-success"></i></td><td><i class="fas fa-check text-success"></i></td></tr>
+<tr><td>Online Galeri</td><td>Var</td><td>Var</td><td>Var</td></tr>
+<tr><td>Hızlı Teslimat</td><td>Yok</td><td>Var</td><td>Var</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<!-- Fiyat Karşılaştırma Tablosu: Kurumsal -->
+<div class="row mb-5 service-compare" data-service="commercial" style="display:none;">
+<div class="col-12">
+<div class="pricing-comparison">
+<h3 class="text-center mb-4">Kurumsal Paketi Karşılaştırma</h3>
+<div class="table-responsive">
+<table class="table table-hover">
+<thead>
+<tr>
+<th>Özellikler</th>
+<th>Başlangıç</th>
+<th>Profesyonel</th>
+<th>Kurumsal</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Çekim Türü</td><td>Ürün</td><td>Ürün + Mekan</td><td>Ürün + Mekan + Ekip</td></tr>
+<tr><td>Fotoğraf Sayısı</td><td>30+</td><td>60+</td><td>100+</td></tr>
+<tr><td>Sosyal Medya Paketi</td><td>Yok</td><td>Var</td><td>Var</td></tr>
+<tr><td>Web Sitesi Paketi</td><td>Yok</td><td>Yok</td><td>Var</td></tr>
+<tr><td>Profesyonel Düzenleme</td><td>Var</td><td>Var</td><td>Var</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<!-- Fiyat Karşılaştırma Tablosu: Genel (Tüm Hizmetler) -->
+<div class="row mb-5 service-compare" data-service="all">
+<div class="col-12">
+<div class="pricing-comparison">
+<h3 class="text-center mb-4">Paket Karşılaştırma</h3>
+<div class="table-responsive">
+<table class="table table-hover">
+<thead>
+<tr>
+<th>Özellikler</th>
+<th>Standart</th>
+<th>Premium</th>
+<th>Lüks</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Çekim Süresi</td><td>4 Saat</td><td>8 Saat</td><td>12 Saat</td></tr>
+<tr><td>Fotoğraf Sayısı</td><td>100+</td><td>300+</td><td>500+</td></tr>
+<tr><td>Fotoğrafçı Sayısı</td><td>1</td><td>2</td><td>2</td></tr>
+<tr><td>Drone Çekimi</td><td><i class="fas fa-times text-danger"></i></td><td><i class="fas fa-check text-success"></i></td><td><i class="fas fa-check text-success"></i></td></tr>
+<tr><td>Online Galeri</td><td>3 Ay</td><td>6 Ay</td><td>1 Yıl</td></tr>
+<tr><td>Fotoğraf Albümü</td><td>20x30</td><td>30x40</td><td>40x60</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<!-- Rezervasyon Takvimi -->
+<div class="row mb-5">
+<div class="col-12">
+<div class="booking-calendar">
+<h3 class="text-center mb-4">Rezervasyon Takvimi</h3>
+<div class="row">
+<div class="col-md-8 mx-auto">
+<div class="calendar-container">
+<div class="calendar-header d-flex justify-content-between align-items-center mb-3">
+<button class="btn btn-outline-primary" id="prevMonth"><i class="fas fa-chevron-left"></i></button>
+<h4 id="currentMonth">Haziran 2024</h4>
+<button class="btn btn-outline-primary" id="nextMonth"><i class="fas fa-chevron-right"></i></button>
+</div>
+<div class="calendar-grid">
+<div class="calendar-weekdays">
+<div>Pzt</div>
+<div>Sal</div>
+<div>Çar</div>
+<div>Per</div>
+<div>Cum</div>
+<div>Cmt</div>
+<div>Paz</div>
+</div>
+<div class="calendar-days" id="calendarDays">
+<!-- JavaScript ile doldurulacak -->
+</div>
+</div>
+<div class="text-center mt-3">
+<span class="fw-bold" id="selectedServiceInfo"></span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Hizmet Kartları -->
+<div class="row">
+<!-- Düğün Fotoğrafçılığı -->
+<div class="col-md-4 mb-4 service-card-container" data-service="wedding">
+<div class="service-card">
+<button class="favorite-btn">
+<i class="far fa-star"></i>
+</button>
+<div class="service-icon">
+<i class="fas fa-camera"></i>
+</div>
+<h3 class="service-title">Düğün Fotoğrafçılığı</h3>
+<p class="service-description">
+                                Özel gününüzü profesyonel düğün fotoğrafçılığı hizmetimizle yakalayın. 
+                                Tam gün çekim, nişan çekimi ve güzel albümler sunuyoruz.
+                            </p>
+<div class="service-price">₺30.000 - ₺60.000</div>
+<ul class="service-features">
+<li><i class="fas fa-check"></i> Tam gün çekim</li>
+<li><i class="fas fa-check"></i> Nişan çekimi</li>
+<li><i class="fas fa-check"></i> Yüksek çözünürlüklü fotoğraflar</li>
+<li><i class="fas fa-check"></i> Özel fotoğraf albümü</li>
+<li><i class="fas fa-check"></i> Online galeri</li>
+<li><i class="fas fa-check"></i> 2 fotoğrafçı</li>
+</ul>
+<button class="btn btn-primary w-100 mb-2">Rezervasyon Yap</button>
+<button class="btn btn-outline-primary w-100" data-bs-target="#weddingModal" data-bs-toggle="modal">Detaylı Bilgi</button>
+</div>
+</div>
+<!-- Portre Fotoğrafçılığı -->
+<div class="col-md-4 mb-4 service-card-container" data-service="portrait">
+<div class="service-card">
+<button class="favorite-btn">
+<i class="far fa-star"></i>
+</button>
+<div class="service-icon">
+<i class="fas fa-user"></i>
+</div>
+<h3 class="service-title">Portre Fotoğrafçılığı</h3>
+<p class="service-description">
+                                Bireyler, aileler ve kurumsal ihtiyaçlar için profesyonel portre çekimleri. 
+                                LinkedIn profilleri, aile portreleri veya kişisel markalaşma için mükemmel.
+                            </p>
+<div class="service-price">₺4.000 - ₺10.000</div>
+<ul class="service-features">
+<li><i class="fas fa-check"></i> 1 saatlik çekim</li>
+<li><i class="fas fa-check"></i> 10 düzenlenmiş fotoğraf</li>
+<li><i class="fas fa-check"></i> Online galeri</li>
+<li><i class="fas fa-check"></i> Baskı seçenekleri</li>
+<li><i class="fas fa-check"></i> Profesyonel makyaj</li>
+<li><i class="fas fa-check"></i> Stüdyo kullanımı</li>
+</ul>
+<button class="btn btn-primary w-100 mb-2">Rezervasyon Yap</button>
+<button class="btn btn-outline-primary w-100" data-bs-target="#portraitModal" data-bs-toggle="modal">Detaylı Bilgi</button>
+</div>
+</div>
+<!-- Etkinlik Fotoğrafçılığı -->
+<div class="col-md-4 mb-4 service-card-container" data-service="event">
+<div class="service-card">
+<button class="favorite-btn">
+<i class="far fa-star"></i>
+</button>
+<div class="service-icon">
+<i class="fas fa-glass-cheers"></i>
+</div>
+<h3 class="service-title">Etkinlik Fotoğrafçılığı</h3>
+<p class="service-description">
+                                Kurumsal etkinlikler, partiler ve özel günler için kapsamlı çekim hizmeti. 
+                                Etkinliğinizin atmosferini ve önemli anlarını yakalıyoruz.
+                            </p>
+<div class="service-price">₺10.000 - ₺30.000</div>
+<ul class="service-features">
+<li><i class="fas fa-check"></i> 4 saatlik çekim</li>
+<li><i class="fas fa-check"></i> 100+ düzenlenmiş fotoğraf</li>
+<li><i class="fas fa-check"></i> Online galeri</li>
+<li><i class="fas fa-check"></i> Hızlı teslimat</li>
+<li><i class="fas fa-check"></i> 2 fotoğrafçı</li>
+<li><i class="fas fa-check"></i> Drone çekimi</li>
+</ul>
+<button class="btn btn-primary w-100 mb-2">Rezervasyon Yap</button>
+<button class="btn btn-outline-primary w-100" data-bs-target="#eventModal" data-bs-toggle="modal">Detaylı Bilgi</button>
+</div>
+</div>
+<!-- Kurumsal Fotoğrafçılık -->
+<div class="col-md-4 mb-4 service-card-container" data-service="commercial">
+<div class="service-card">
+<button class="favorite-btn">
+<i class="far fa-star"></i>
+</button>
+<div class="service-icon">
+<i class="fas fa-building"></i>
+</div>
+<h3 class="service-title">Kurumsal Fotoğrafçılık</h3>
+<p class="service-description">
+                                Şirketiniz için profesyonel kurumsal fotoğraf çekimleri. 
+                                Ürün, mekan ve ekip fotoğrafları ile markanızı güçlendirin.
+                            </p>
+<div class="service-price">₺15.000 - ₺40.000</div>
+<ul class="service-features">
+<li><i class="fas fa-check"></i> Ürün fotoğrafçılığı</li>
+<li><i class="fas fa-check"></i> Ekip fotoğrafları</li>
+<li><i class="fas fa-check"></i> Mekan çekimleri</li>
+<li><i class="fas fa-check"></i> Profesyonel düzenleme</li>
+<li><i class="fas fa-check"></i> Sosyal medya paketi</li>
+<li><i class="fas fa-check"></i> Web sitesi paketi</li>
+</ul>
+<button class="btn btn-primary w-100 mb-2">Rezervasyon Yap</button>
+<button class="btn btn-outline-primary w-100" data-bs-target="#commercialModal" data-bs-toggle="modal">Detaylı Bilgi</button>
+</div>
+</div>
+</div>
+<!-- Neden Biz Bölümü -->
+<div class="row mt-5">
+<div class="col-12">
+<h3 class="text-center mb-4">Neden Bizi Tercih Etmelisiniz?</h3>
+<div class="row">
+<div class="col-md-3 text-center mb-4">
+<div class="feature-icon mb-3">
+<i class="fas fa-camera-retro fa-3x"></i>
+</div>
+<h4>Profesyonel Ekip</h4>
+<p>10+ yıllık deneyimli fotoğrafçılar</p>
+</div>
+<div class="col-md-3 text-center mb-4">
+<div class="feature-icon mb-3">
+<i class="fas fa-clock fa-3x"></i>
+</div>
+<h4>Hızlı Teslimat</h4>
+<p>24 saat içinde ön izleme</p>
+</div>
+<div class="col-md-3 text-center mb-4">
+<div class="feature-icon mb-3">
+<i class="fas fa-star fa-3x"></i>
+</div>
+<h4>Kaliteli Hizmet</h4>
+<p>%100 müşteri memnuniyeti</p>
+</div>
+<div class="col-md-3 text-center mb-4">
+<div class="feature-icon mb-3">
+<i class="fas fa-shield-alt fa-3x"></i>
+</div>
+<h4>Güvenilir</h4>
+<p>Sigortalı ve garantili hizmet</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Müşteri Yorumları -->
+<div class="row mt-5">
+<div class="col-12">
+<h3 class="text-center mb-4">Müşteri Yorumları</h3>
+<div class="row">
+<div class="col-md-4 mb-4">
+<div class="testimonial-card">
+<div class="testimonial-content">
+<p>"Düğünümüz için harika bir iş çıkardılar. Tüm anlarımızı mükemmel şekilde yakaladılar."</p>
+</div>
+<div class="testimonial-author">
+<img alt="Müşteri" class="rounded-circle" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330"/>
+<div class="author-info">
+<h5>Ayşe Yılmaz</h5>
+<p>Düğün Fotoğrafçılığı</p>
+</div>
+</div>
+</div>
+</div>
+<div class="col-md-4 mb-4">
+<div class="testimonial-card">
+<div class="testimonial-content">
+<p>"Kurumsal fotoğraflarımız için profesyonel bir hizmet aldık. Sonuçlar muhteşem!"</p>
+</div>
+<div class="testimonial-author">
+<img alt="Müşteri" class="rounded-circle" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d"/>
+<div class="author-info">
+<h5>Mehmet Demir</h5>
+<p>Kurumsal Fotoğrafçılık</p>
+</div>
+</div>
+</div>
+</div>
+<div class="col-md-4 mb-4">
+<div class="testimonial-card">
+<div class="testimonial-content">
+<p>"Aile portrelerimiz için harika bir deneyimdi. Çocuklarımızla güzel anılar yakaladık."</p>
+</div>
+<div class="testimonial-author">
+<img alt="Müşteri" class="rounded-circle" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb"/>
+<div class="author-info">
+<h5>Zeynep Kaya</h5>
+<p>Portre Fotoğrafçılığı</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- SSS Bölümü -->
+<div class="row mt-5">
+<div class="col-12">
+<h3 class="text-center mb-4">Sıkça Sorulan Sorular</h3>
+<div class="accordion" id="faqAccordion">
+<div class="accordion-item">
+<h2 class="accordion-header">
+<button class="accordion-button" data-bs-target="#faq1" data-bs-toggle="collapse" type="button">
+                                        Fotoğraflar ne zaman teslim edilir?
+                                    </button>
+</h2>
+<div class="accordion-collapse collapse show" data-bs-parent="#faqAccordion" id="faq1">
+<div class="accordion-body">
+                                        Fotoğraflarınız çekimden sonraki 1-2 hafta içinde online galeri üzerinden paylaşılır. Baskı ve albümler ise 2-3 hafta içinde hazır olur.
+                                    </div>
+</div>
+</div>
+<div class="accordion-item">
+<h2 class="accordion-header">
+<button class="accordion-button collapsed" data-bs-target="#faq2" data-bs-toggle="collapse" type="button">
+                                        Rezervasyon için ön ödeme gerekli mi?
+                                    </button>
+</h2>
+<div class="accordion-collapse collapse" data-bs-parent="#faqAccordion" id="faq2">
+<div class="accordion-body">
+                                        Evet, rezervasyonunuzun kesinleşmesi için toplam tutarın %30'u kadar ön ödeme yapmanız gerekmektedir.
+                                    </div>
+</div>
+</div>
+<div class="accordion-item">
+<h2 class="accordion-header">
+<button class="accordion-button collapsed" data-bs-target="#faq3" data-bs-toggle="collapse" type="button">
+                                        Hava durumu kötü olursa ne olur?
+                                    </button>
+</h2>
+<div class="accordion-collapse collapse" data-bs-parent="#faqAccordion" id="faq3">
+<div class="accordion-body">
+                                        Hava durumuna bağlı olarak çekim tarihini değiştirebiliriz. Alternatif tarihler için ücretsiz olarak yeniden planlama yapılır.
+                                    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Hizmetler Paket Kartları (örnek) -->
+<div class="row" id="servicePackagesRow">
+<!-- Düğün Paketi Kartları -->
+<div class="col-md-4 mb-4 service-package" data-service="wedding">
+<div class="card h-100">
+<div class="card-header bg-primary text-white">Düğün Standart</div>
+<div class="card-body">
+<h5 class="card-title">₺30.000</h5>
+<ul>
+<li>4 Saat Çekim</li>
+<li>100+ Fotoğraf</li>
+<li>1 Fotoğrafçı</li>
+<li>Online Galeri (3 Ay)</li>
+</ul>
+<button class="btn btn-success w-100 reserve-package-btn">Rezervasyon Yap</button>
+</div>
+</div>
+</div>
+<div class="col-md-4 mb-4 service-package" data-service="wedding">
+<div class="card h-100">
+<div class="card-header bg-info text-white">Düğün Premium</div>
+<div class="card-body">
+<h5 class="card-title">₺45.000</h5>
+<ul>
+<li>8 Saat Çekim</li>
+<li>300+ Fotoğraf</li>
+<li>2 Fotoğrafçı</li>
+<li>Drone Çekimi</li>
+<li>Online Galeri (6 Ay)</li>
+</ul>
+<button class="btn btn-success w-100 reserve-package-btn">Rezervasyon Yap</button>
+</div>
+</div>
+</div>
+<div class="col-md-4 mb-4 service-package" data-service="wedding">
+<div class="card h-100">
+<div class="card-header bg-warning text-white">Düğün Lüks</div>
+<div class="card-body">
+<h5 class="card-title">₺60.000</h5>
+<ul>
+<li>12 Saat Çekim</li>
+<li>500+ Fotoğraf</li>
+<li>2 Fotoğrafçı</li>
+<li>Drone Çekimi</li>
+<li>Online Galeri (1 Yıl)</li>
+<li>Özel Albüm</li>
+</ul>
+<button class="btn btn-success w-100 reserve-package-btn">Rezervasyon Yap</button>
+</div>
+</div>
+</div>
+<!-- Portre Paketi Kartları -->
+<div class="col-md-4 mb-4 service-package" data-service="portrait">
+<div class="card h-100">
+<div class="card-header bg-primary text-white">Portre Bireysel</div>
+<div class="card-body">
+<h5 class="card-title">₺4.000</h5>
+<ul>
+<li>1 Saat Çekim</li>
+<li>20 Fotoğraf</li>
+<li>Profesyonel Makyaj</li>
+<li>Stüdyo Kullanımı</li>
+</ul>
+<button class="btn btn-success w-100 reserve-package-btn">Rezervasyon Yap</button>
+</div>
+</div>
+</div>
+<div class="col-md-4 mb-4 service-package" data-service="portrait">
+<div class="card h-100">
+<div class="card-header bg-info text-white">Portre Aile</div>
+<div class="card-body">
+<h5 class="card-title">₺6.000</h5>
+<ul>
+<li>2 Saat Çekim</li>
+<li>40 Fotoğraf</li>
+<li>Stüdyo Kullanımı</li>
+</ul>
+<button class="btn btn-success w-100 reserve-package-btn">Rezervasyon Yap</button>
+</div>
+</div>
+</div>
+<div class="col-md-4 mb-4 service-package" data-service="portrait">
+<div class="card h-100">
+<div class="card-header bg-warning text-white">Portre Kurumsal</div>
+<div class="card-body">
+<h5 class="card-title">₺10.000</h5>
+<ul>
+<li>2 Saat Çekim</li>
+<li>50 Fotoğraf</li>
+<li>Stüdyo Kullanımı</li>
+</ul>
+<button class="btn btn-success w-100 reserve-package-btn">Rezervasyon Yap</button>
+</div>
+</div>
+</div>
+<!-- Video Paketi Kartları -->
+<div class="col-md-4 mb-4 service-package" data-service="video">
+<div class="card h-100">
+<div class="card-header bg-primary text-white">Video Standart</div>
+<div class="card-body">
+<h5 class="card-title">₺8.000</h5>
+<ul>
+<li>2 Saat Çekim</li>
+<li>1 Kameraman</li>
+<li>1 Dakikalık Klip</li>
+<li>Full HD Teslim</li>
+<li>Online Link</li>
+</ul>
+<button class="btn btn-success w-100 reserve-package-btn">Rezervasyon Yap</button>
+</div>
+</div>
+</div>
+<div class="col-md-4 mb-4 service-package" data-service="video">
+<div class="card h-100">
+<div class="card-header bg-info text-white">Video Premium</div>
+<div class="card-body">
+<h5 class="card-title">₺15.000</h5>
+<ul>
+<li>4 Saat Çekim</li>
+<li>2 Kameraman</li>
+<li>3 Dakikalık Klip</li>
+<li>4K Teslim</li>
+<li>Drone Çekimi</li>
+<li>Online Link</li>
+</ul>
+<button class="btn btn-success w-100 reserve-package-btn">Rezervasyon Yap</button>
+</div>
+</div>
+</div>
+<div class="col-md-4 mb-4 service-package" data-service="video">
+<div class="card h-100">
+<div class="card-header bg-warning text-white">Video Lüks</div>
+<div class="card-body">
+<h5 class="card-title">₺25.000</h5>
+<ul>
+<li>8 Saat Çekim</li>
+<li>3 Kameraman</li>
+<li>10 Dakikalık Klip</li>
+<li>4K Teslim</li>
+<li>Drone Çekimi</li>
+<li>USB Teslim</li>
+<li>Online Link</li>
+</ul>
+<button class="btn btn-success w-100 reserve-package-btn">Rezervasyon Yap</button>
+</div>
+</div>
+</div>
+<!-- Drone Paketi Kartları -->
+<div class="col-md-4 mb-4 service-package" data-service="drone">
+<div class="card h-100">
+<div class="card-header bg-primary text-white">Drone Standart</div>
+<div class="card-body">
+<h5 class="card-title">₺5.000</h5>
+<ul>
+<li>30 Dakika Uçuş</li>
+<li>10 Fotoğraf</li>
+<li>Full HD Video</li>
+<li>Online Teslim</li>
+</ul>
+<button class="btn btn-success w-100 reserve-package-btn">Rezervasyon Yap</button>
+</div>
+</div>
+</div>
+<div class="col-md-4 mb-4 service-package" data-service="drone">
+<div class="card h-100">
+<div class="card-header bg-info text-white">Drone Premium</div>
+<div class="card-body">
+<h5 class="card-title">₺9.000</h5>
+<ul>
+<li>1 Saat Uçuş</li>
+<li>30 Fotoğraf</li>
+<li>4K Video</li>
+<li>Online Teslim</li>
+<li>Montajlı Klip</li>
+</ul>
+<button class="btn btn-success w-100 reserve-package-btn">Rezervasyon Yap</button>
+</div>
+</div>
+</div>
+<div class="col-md-4 mb-4 service-package" data-service="drone">
+<div class="card h-100">
+<div class="card-header bg-warning text-white">Drone Lüks</div>
+<div class="card-body">
+<h5 class="card-title">₺15.000</h5>
+<ul>
+<li>2 Saat Uçuş</li>
+<li>60 Fotoğraf</li>
+<li>4K Video</li>
+<li>Online Teslim</li>
+<li>Montajlı Klip</li>
+<li>Ham Video Teslim</li>
+</ul>
+<button class="btn btn-success w-100 reserve-package-btn">Rezervasyon Yap</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Profil Bölümü -->
+<section class="profile-section" id="profile" style="display: none;">
+<div class="container">
+<div class="profile-header text-center mb-4">
+<div class="profile-avatar mx-auto mb-3">
+<img alt="Profil Fotoğrafı" id="profilePicture" src="https://randomuser.me/api/portraits/men/1.jpg"/>
+<label class="profile-avatar-upload" for="avatarUpload">
+<i class="fas fa-camera"></i>
+</label>
+<input id="avatarUpload" style="display: none;" type="file"/>
+</div>
+<div class="profile-name" id="profileName">Kullanıcı Adı</div>
+<div class="profile-email" id="profileEmail">kullanici@email.com</div>
+<div class="profile-stats justify-content-center">
+<div class="stat-item">
+<div class="stat-value">0</div>
+<div class="stat-label">Rezervasyon</div>
+</div>
+<div class="stat-item">
+<div class="stat-value">0</div>
+<div class="stat-label">Favori</div>
+</div>
+</div>
+</div>
+<div class="profile-tabs d-flex justify-content-center mb-4">
+<button class="profile-tab active" data-tab="profile-info">Bilgilerim</button>
+<button class="profile-tab" data-tab="profile-reservations">Rezervasyonlarım</button>
+<button class="profile-tab" data-tab="profile-favorites">Favorilerim</button>
+<button class="btn btn-danger ms-auto" id="logoutBtn">Çıkış Yap</button>
+</div>
+<div class="profile-content">
+<div class="profile-tab-content" id="profile-info" style="display: block;">
+<form class="profile-form" id="profileForm">
+<div class="form-group">
+<label class="form-label">Ad Soyad</label>
+<input class="form-control" required="" type="text" value=""/>
+</div>
+<div class="form-group">
+<label class="form-label">E-posta</label>
+<input class="form-control" required="" type="email" value=""/>
+</div>
+<button class="btn btn-primary" type="submit">Güncelle</button>
+</form>
+</div>
+<div class="profile-tab-content" id="profile-reservations" style="display: none;">
+<h4>Rezervasyonlarım</h4>
+<p>Henüz rezervasyonunuz yok.</p>
+</div>
+<div class="profile-tab-content" id="profile-favorites" style="display: none;">
+<h4>Favorilerim <span id="favoriteCount"></span></h4>
+<p>Henüz favoriniz yok.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Hizmet Detay Modalları -->
+<!-- Düğün Fotoğrafçılığı Modal -->
+<div class="modal fade" id="weddingModal" tabindex="-1">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title">Düğün Fotoğrafçılığı Detayları</h5>
+<button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+</div>
+<div class="modal-body">
+<div class="row">
+<div class="col-md-6">
+<img alt="Düğün" class="img-fluid rounded mb-3" src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4"/>
+</div>
+<div class="col-md-6">
+<h4>Hizmet İçeriği</h4>
+<ul class="list-unstyled">
+<li><i class="fas fa-check text-success"></i> Tam gün çekim (12 saat)</li>
+<li><i class="fas fa-check text-success"></i> 2 profesyonel fotoğrafçı</li>
+<li><i class="fas fa-check text-success"></i> Nişan çekimi (2 saat)</li>
+<li><i class="fas fa-check text-success"></i> 500+ düzenlenmiş fotoğraf</li>
+<li><i class="fas fa-check text-success"></i> Özel fotoğraf albümü</li>
+<li><i class="fas fa-check text-success"></i> Online galeri (1 yıl)</li>
+<li><i class="fas fa-check text-success"></i> USB bellek</li>
+</ul>
+<h4 class="mt-4">Fiyatlandırma</h4>
+<p>Standart Paket: ₺30.000</p>
+<p>Premium Paket: ₺45.000</p>
+<p>Lüks Paket: ₺60.000</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Portre Fotoğrafçılığı Modal -->
+<div class="modal fade" id="portraitModal" tabindex="-1">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title">Portre Fotoğrafçılığı Detayları</h5>
+<button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+</div>
+<div class="modal-body">
+<div class="row">
+<div class="col-md-6">
+<img alt="Portre" class="img-fluid rounded mb-3" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb"/>
+</div>
+<div class="col-md-6">
+<h4>Hizmet İçeriği</h4>
+<ul class="list-unstyled">
+<li><i class="fas fa-check text-success"></i> 1 saatlik çekim</li>
+<li><i class="fas fa-check text-success"></i> Profesyonel makyaj</li>
+<li><i class="fas fa-check text-success"></i> 20 düzenlenmiş fotoğraf</li>
+<li><i class="fas fa-check text-success"></i> Stüdyo kullanımı</li>
+<li><i class="fas fa-check text-success"></i> Online galeri</li>
+<li><i class="fas fa-check text-success"></i> Baskı seçenekleri</li>
+</ul>
+<h4 class="mt-4">Fiyatlandırma</h4>
+<p>Bireysel: ₺4.000</p>
+<p>Aile: ₺6.000</p>
+<p>Kurumsal: ₺10.000</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Etkinlik Fotoğrafçılığı Modal -->
+<div class="modal fade" id="eventModal" tabindex="-1">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title">Etkinlik Fotoğrafçılığı Detayları</h5>
+<button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+</div>
+<div class="modal-body">
+<div class="row">
+<div class="col-md-6">
+<img alt="Etkinlik" class="img-fluid rounded mb-3" src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622"/>
+</div>
+<div class="col-md-6">
+<h4>Hizmet İçeriği</h4>
+<ul class="list-unstyled">
+<li><i class="fas fa-check text-success"></i> 4 saatlik çekim</li>
+<li><i class="fas fa-check text-success"></i> 2 profesyonel fotoğrafçı</li>
+<li><i class="fas fa-check text-success"></i> Drone çekimi</li>
+<li><i class="fas fa-check text-success"></i> 100+ düzenlenmiş fotoğraf</li>
+<li><i class="fas fa-check text-success"></i> Online galeri</li>
+<li><i class="fas fa-check text-success"></i> Hızlı teslimat</li>
+</ul>
+<h4 class="mt-4">Fiyatlandırma</h4>
+<p>Standart: ₺10.000</p>
+<p>Premium: ₺20.000</p>
+<p>Lüks: ₺30.000</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Kurumsal Fotoğrafçılık Modal -->
+<div class="modal fade" id="commercialModal" tabindex="-1">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title">Kurumsal Fotoğrafçılık Detayları</h5>
+<button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+</div>
+<div class="modal-body">
+<div class="row">
+<div class="col-md-6">
+<img alt="Kurumsal" class="img-fluid rounded mb-3" src="https://images.unsplash.com/photo-1497366754035-f200968a6e72"/>
+</div>
+<div class="col-md-6">
+<h4>Hizmet İçeriği</h4>
+<ul class="list-unstyled">
+<li><i class="fas fa-check text-success"></i> Ürün fotoğrafçılığı</li>
+<li><i class="fas fa-check text-success"></i> Ekip fotoğrafları</li>
+<li><i class="fas fa-check text-success"></i> Mekan çekimleri</li>
+<li><i class="fas fa-check text-success"></i> Profesyonel düzenleme</li>
+<li><i class="fas fa-check text-success"></i> Sosyal medya paketi</li>
+<li><i class="fas fa-check text-success"></i> Web sitesi paketi</li>
+</ul>
+<h4 class="mt-4">Fiyatlandırma</h4>
+<p>Başlangıç: ₺15.000</p>
+<p>Profesyonel: ₺25.000</p>
+<p>Kurumsal: ₺40.000</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- İletişim Bölümü -->
+<section id="contact" style="display: none;">
+<div class="container py-5">
+<h2 class="text-center mb-5">İletişim</h2>
+<div class="row justify-content-center">
+<div class="col-md-6">
+<form>
+<div class="mb-3">
+<label class="form-label">Ad Soyad</label>
+<input class="form-control" required="" type="text"/>
+</div>
+<div class="mb-3">
+<label class="form-label">E-posta</label>
+<input class="form-control" required="" type="email"/>
+</div>
+<div class="mb-3">
+<label class="form-label">Mesajınız</label>
+<textarea class="form-control" required="" rows="5"></textarea>
+</div>
+<button class="btn btn-primary w-100" type="submit">Gönder</button>
+</form>
+<div class="mt-4">
+</div>
+</div>
+</div>
+</div>
+<div class="mt-4">
+</div>
+<div class="mt-4">
+<p><i class="fas fa-envelope"></i> Mertcan1181@gmail.com</p>
+<p><i class="fas fa-phone"></i> 0536 065 8423</p>
+<p><i class="fas fa-map-marker-alt"></i> Ankara, Çankaya, Atatürk Bulvarı No:123</p>
+</div>
+</section>
+<!-- Bootstrap JS önce -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+        function getUsers() {
+          return JSON.parse(localStorage.getItem('users') || '[]');
+        }
+        function setUsers(users) {
+          localStorage.setItem('users', JSON.stringify(users));
+        }
+        function setCurrentUser(user) {
+          localStorage.setItem('currentUser', JSON.stringify(user));
+        }
+        function getCurrentUser() {
+          return JSON.parse(localStorage.getItem('currentUser'));
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const loginBtn = document.getElementById('loginBtn');
+            const profileLink = document.getElementById('profileLink');
+            const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+            const registerModal = new bootstrap.Modal(document.getElementById('registerModal'));
+            const showRegister = document.getElementById('showRegister');
+            const showLogin = document.getElementById('showLogin');
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+            const profileForm = document.getElementById('profileForm');
+            const logoutBtn = document.getElementById('logoutBtn');
+            const avatarUpload = document.getElementById('avatarUpload');
+            const profilePicture = document.getElementById('profilePicture');
+            const profileTabs = document.querySelectorAll('.profile-tab');
+            const profileTabContents = document.querySelectorAll('.profile-tab-content');
+            const favoriteBtns = document.querySelectorAll('.favorite-btn');
+
+            // Sayfa Geçişleri
+            function showPage(pageId) {
+                // Tüm bölümleri gizle
+                const sections = document.querySelectorAll('main > section, section#profile, section#contact');
+                sections.forEach(section => {
+                    section.style.display = 'none';
+                });
+
+                // Hedef bölümü göster
+                const targetSection = document.getElementById(pageId);
+                if (targetSection) {
+                    targetSection.style.display = 'block';
+                    window.scrollTo(0, 0);
+                }
+            }
+
+            // Navbar linkleri için event listener
+            document.querySelectorAll('.nav-link[data-page]').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const pageId = e.target.getAttribute('data-page');
+                    showPage(pageId);
+                });
+            });
+
+            // Ana sayfa butonu için event listener
+            const heroButton = document.querySelector('.hero-content .btn[data-page]');
+            if (heroButton) {
+                heroButton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const pageId = e.target.getAttribute('data-page');
+                    showPage(pageId);
+                });
+            }
+
+            // Sayfa yüklendiğinde ana sayfayı göster
+            showPage('home');
+
+            // Check Authentication
+            function checkAuth() {
+                const user = getCurrentUser();
+                if (user) {
+                    loginBtn.style.display = 'none';
+                    profileLink.style.display = 'block';
+                    document.getElementById('profileName').textContent = user.name;
+                    document.getElementById('profileEmail').textContent = user.email;
+                } else {
+                    loginBtn.style.display = 'block';
+                    profileLink.style.display = 'none';
+                }
+            }
+
+            // Show Profile Page
+            function showProfilePage() {
+                showPage('profile');
+                checkAuth();
+            }
+
+            // Switch Profile Tab
+            function switchProfileTab(tabId) {
+                profileTabContents.forEach(content => {
+                    content.style.display = 'none';
+                });
+                document.getElementById(tabId).style.display = 'block';
+            }
+
+            // Event Listeners
+            if (loginBtn) {
+                loginBtn.addEventListener('click', () => {
+                    loginModal.show();
+                });
+            }
+
+            if (showRegister) {
+                showRegister.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    loginModal.hide();
+                    registerModal.show();
+                });
+            }
+
+            if (showLogin) {
+                showLogin.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    registerModal.hide();
+                    loginModal.show();
+                });
+            }
+
+            if (loginForm) {
+                loginForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const email = loginForm.querySelector('input[type="email"]').value;
+                    const password = loginForm.querySelector('input[type="password"]').value;
+                    let users = getUsers();
+                    const user = users.find(u => u.email === email && u.password === password);
+                    if (user) {
+                        setCurrentUser({ name: user.name, email: user.email });
+                        loginModal.hide();
+                        showProfilePage();
+                    } else {
+                        alert('E-posta veya şifre yanlış!');
+                    }
+                });
+            }
+
+            if (registerForm) {
+                registerForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const name = registerForm.querySelector('input[name="name"]').value;
+                    const email = registerForm.querySelector('input[name="email"]').value;
+                    const password = registerForm.querySelector('input[name="password"]').value;
+                    const password2 = registerForm.querySelector('input[name="password2"]').value;
+                    if (password !== password2) {
+                        alert('Şifreler aynı olmalı!');
+                        return;
+                    }
+                    let users = getUsers();
+                    if (users.find(u => u.email === email)) {
+                        alert('Bu e-posta ile zaten kayıtlı bir kullanıcı var!');
+                        return;
+                    }
+                    users.push({ name, email, password });
+                    setUsers(users);
+                    setCurrentUser({ name, email });
+                    registerModal.hide();
+                    showProfilePage();
+                });
+            }
+
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => {
+                    localStorage.removeItem('currentUser');
+                    showPage('home');
+                    checkAuth();
+                });
+            }
+
+            if (profileLink) {
+                profileLink.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showProfilePage();
+                });
+            }
+
+            if (avatarUpload && profilePicture) {
+                avatarUpload.addEventListener('change', (e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            profilePicture.src = e.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+
+            profileTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    profileTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    switchProfileTab(tab.dataset.tab);
+                    // Sekme değişince ilgili içeriği güncelle
+                    if (tab.dataset.tab === 'profile-reservations') {
+                        updateReservationsUI();
+                    }
+                    if (tab.dataset.tab === 'profile-favorites') {
+                        updateFavoritesUI();
+                    }
+                });
+            });
+            // Sayfa ilk açıldığında da güncel tut
+            updateReservationsUI();
+            updateFavoritesUI();
+            // Favori butonlarını her zaman güncel tut
+            function refreshFavoriteButtons() {
+                document.querySelectorAll('.portfolio-item').forEach((item, idx) => {
+                    const btn = item.querySelector('.portfolio-fav-btn');
+                    if (btn) {
+                        const img = item.querySelector('img')?.src || '';
+                        const title = item.querySelector('.portfolio-overlay h3')?.textContent || '';
+                        const desc = item.querySelector('.portfolio-overlay p')?.textContent || '';
+                        const id = 'portfolio-' + idx + '-' + img;
+                        // Yıldızın dolu/boş olmasını favorilere göre ayarla
+                        const favs = getFavorites();
+                        if (favs.find(fav => fav.id === id)) {
+                            btn.querySelector('i').classList.remove('far');
+                            btn.querySelector('i').classList.add('fas');
+                        } else {
+                            btn.querySelector('i').classList.remove('fas');
+                            btn.querySelector('i').classList.add('far');
+                        }
+                        // Eski eventleri kaldır, yenisini ekle
+                        btn.replaceWith(btn.cloneNode(true));
+                        const newBtn = item.querySelector('.portfolio-fav-btn');
+                        handleFavoriteButton(newBtn, {id, img, title, desc});
+                    }
+                });
+                document.querySelectorAll('.service-card-container').forEach((item, idx) => {
+                    const btn = item.querySelector('.favorite-btn');
+                    if (btn) {
+                        const title = item.querySelector('.service-title')?.textContent || '';
+                        const desc = item.querySelector('.service-description')?.textContent || '';
+                        const img = item.querySelector('.service-icon i') ? '' : '';
+                        const id = 'service-' + idx + '-' + title;
+                        const favs = getFavorites();
+                        if (favs.find(fav => fav.id === id)) {
+                            btn.querySelector('i').classList.remove('far');
+                            btn.querySelector('i').classList.add('fas');
+                        } else {
+                            btn.querySelector('i').classList.remove('fas');
+                            btn.querySelector('i').classList.add('far');
+                        }
+                        btn.replaceWith(btn.cloneNode(true));
+                        const newBtn = item.querySelector('.favorite-btn');
+                        handleFavoriteButton(newBtn, {id, img, title, desc});
+                    }
+                });
+            }
+            // Favori ve rezervasyon güncellemelerinde butonları da güncelle
+            function updateFavoritesUI() {
+                // ... mevcut kod ...
+                const favContainer = document.getElementById('profile-favorites');
+                if (!favContainer) return;
+                const favs = getFavorites();
+                let html = '';
+                if (favs.length === 0) {
+                    html = '<h4>Favorilerim <span id="favoriteCount"></span></h4><p>Henüz favoriniz yok.</p>';
+                } else {
+                    html = '<h4>Favorilerim <span id="favoriteCount"></span></h4><div class="row">';
+                    favs.forEach(fav => {
+                        html += `<div class="col-md-4 mb-4"><div class="card"><img src="${fav.img}" class="card-img-top" alt="Favori"><div class="card-body"><h5 class="card-title">${fav.title}</h5><p class="card-text">${fav.desc || ''}</p></div></div></div>`;
+                    });
+                    html += '</div>';
+                }
+                favContainer.innerHTML = html;
+                updateFavoriteCount();
+                refreshFavoriteButtons();
+            }
+            function updateReservationsUI() {
+                const rezContainer = document.getElementById('profile-reservations');
+                if (!rezContainer) return;
+                const rezs = getReservations();
+                let html = '';
+                if (rezs.length === 0) {
+                    html = '<h4>Rezervasyonlarım</h4><p>Henüz rezervasyonunuz yok.</p>';
+                } else {
+                    html = '<h4>Rezervasyonlarım</h4><ul class="list-group">';
+                    rezs.forEach((r, i) => {
+                        html += `<li class="list-group-item d-flex justify-content-between align-items-center">${r.date} - ${r.serviceName || ''}${r.packageName ? ' - ' + r.packageName : ''}<button class="btn btn-sm btn-danger cancel-rez-btn" data-index="${i}">İptal Et</button></li>`;
+                    });
+                    html += '</ul>';
+                }
+                rezContainer.innerHTML = html;
+                document.querySelectorAll('.cancel-rez-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const idx = parseInt(btn.getAttribute('data-index'));
+                        let rezs = getReservations();
+                        rezs.splice(idx, 1);
+                        setReservations(rezs);
+                        updateReservationsUI();
+                    });
+                });
+                const rezStat = document.querySelector('.profile-stats .stat-item:nth-child(1) .stat-value');
+                if (rezStat) {
+                    rezStat.textContent = rezs.length;
+                }
+            }
+
+            // Rezervasyon takvimi gün seçimi
+            function generateCalendar(year, month) {
+                const firstDay = new Date(year, month, 1);
+                const lastDay = new Date(year, month + 1, 0);
+                const daysInMonth = lastDay.getDate();
+                const startingDay = (firstDay.getDay() + 6) % 7; // Pazartesi=0, Pazar=6
+                const calendarDays = document.getElementById('calendarDays');
+                if (!calendarDays) return;
+                calendarDays.innerHTML = '';
+                // Önceki ayın boş kutuları
+                for (let i = 0; i < startingDay; i++) {
+                    const dayElement = document.createElement('div');
+                    dayElement.className = 'calendar-day';
+                    calendarDays.appendChild(dayElement);
+                }
+                // Rezervasyonlu günleri bul
+                const rezs = JSON.parse(localStorage.getItem('reservations') || '[]');
+                const currentService = window.selectedServiceForReservation || 'all';
+                // Ayın günleri
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const dayElement = document.createElement('div');
+                    dayElement.className = 'calendar-day';
+                    dayElement.textContent = day;
+                    // O gün için rezervasyon var mı?
+                    const dateStr = `${day}/${month + 1}/${year}`;
+                    const isBooked = rezs.some(r => r.date === dateStr && (currentService === 'all' || r.serviceName === currentService));
+                    if (isBooked) {
+                        dayElement.classList.add('booked');
+                        dayElement.title = 'Dolu';
+                    } else {
+                        dayElement.classList.add('available');
+                        dayElement.title = 'Müsait';
+                        dayElement.addEventListener('click', () => {
+                            // Rezervasyon ekle
+                            let serviceName = currentService;
+                            if (serviceName === 'all') serviceName = 'Genel';
+                            const rezs = JSON.parse(localStorage.getItem('reservations') || '[]');
+                            rezs.push({date: dateStr, serviceName, packageName: ''});
+                            localStorage.setItem('reservations', JSON.stringify(rezs));
+                            updateReservationsUI();
+                            generateCalendar(year, month);
+                            alert(`${dateStr} tarihi için rezervasyonunuz alındı!`);
+                        });
+                    }
+                    calendarDays.appendChild(dayElement);
+                }
+            }
+
+            // Takvim ay değiştirme
+            let currentDate = new Date();
+            const currentMonthEl = document.getElementById('currentMonth');
+            if (currentMonthEl) {
+                currentMonthEl.textContent = currentDate.toLocaleString('tr-TR', { month: 'long', year: 'numeric' });
+            }
+            const prevMonthBtn = document.getElementById('prevMonth');
+            const nextMonthBtn = document.getElementById('nextMonth');
+            if (prevMonthBtn && nextMonthBtn) {
+                prevMonthBtn.addEventListener('click', () => {
+                    currentDate.setMonth(currentDate.getMonth() - 1);
+                    if (currentMonthEl) {
+                        currentMonthEl.textContent = currentDate.toLocaleString('tr-TR', { month: 'long', year: 'numeric' });
+                    }
+                    generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+                });
+                nextMonthBtn.addEventListener('click', () => {
+                    currentDate.setMonth(currentDate.getMonth() + 1);
+                    if (currentMonthEl) {
+                        currentMonthEl.textContent = currentDate.toLocaleString('tr-TR', { month: 'long', year: 'numeric' });
+                    }
+                    generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+                });
+            }
+            generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
+
+            // Hizmet kartlarındaki "Rezervasyon Yap" butonları
+            document.querySelectorAll('.service-card-container').forEach(item => {
+                const rezBtn = item.querySelector('.btn-primary');
+                if (rezBtn) {
+                    rezBtn.addEventListener('click', () => {
+                        // Seçili hizmeti al
+                        const service = item.getAttribute('data-service');
+                        const serviceName = item.querySelector('.service-title')?.textContent || '';
+                        // Bugünkü tarihi al
+                        const now = new Date();
+                        const dateStr = `${now.getDate()}/${now.getMonth()+1}/${now.getFullYear()}`;
+                        const rezs = getReservations();
+                        rezs.push({date: dateStr, service: service, serviceName: serviceName});
+                        setReservations(rezs);
+                        updateReservationsUI();
+                        alert(`${serviceName} için bugüne rezervasyonunuz alındı!`);
+                    });
+                }
+            });
+
+            // Profil rezervasyon sekmesini ilk yüklemede güncelle
+            updateReservationsUI();
+
+            // Favori ekleme/çıkarma ve favorileri localStorage'da tutma
+            function getFavorites() {
+                return JSON.parse(localStorage.getItem('favorites') || '[]');
+            }
+            function setFavorites(favs) {
+                localStorage.setItem('favorites', JSON.stringify(favs));
+            }
+            function updateFavoritesUI() {
+                // Profil Favorilerim sekmesini güncelle
+                const favContainer = document.getElementById('profile-favorites');
+                if (!favContainer) return;
+                const favs = getFavorites();
+                let html = '';
+                if (favs.length === 0) {
+                    html = '<h4>Favorilerim <span id="favoriteCount"></span></h4><p>Henüz favoriniz yok.</p>';
+                } else {
+                    html = '<h4>Favorilerim <span id="favoriteCount"></span></h4><div class="row">';
+                    favs.forEach(fav => {
+                        html += `<div class="col-md-4 mb-4"><div class="card"><img src="${fav.img}" class="card-img-top" alt="Favori"><div class="card-body"><h5 class="card-title">${fav.title}</h5><p class="card-text">${fav.desc || ''}</p></div></div></div>`;
+                    });
+                    html += '</div>';
+                }
+                favContainer.innerHTML = html;
+                updateFavoriteCount();
+                refreshFavoriteButtons();
+            }
+
+            // Portfolyo ve hizmet kartlarındaki favori butonları için ortak fonksiyon
+            function handleFavoriteButton(btn, data) {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    if (!isLoggedIn()) {
+                        alert('Favori eklemeniz için giriş yapmanız gerekiyor.');
+                        return;
+                    }
+                    const icon = btn.querySelector('i');
+                    let favs = getFavorites();
+                    const exists = favs.find(fav => fav.id === data.id);
+                    if (!exists) {
+                        icon.classList.remove('far');
+                        icon.classList.add('fas');
+                        favs.push(data);
+                    } else {
+                        icon.classList.remove('fas');
+                        icon.classList.add('far');
+                        favs = favs.filter(fav => fav.id !== data.id);
+                    }
+                    setFavorites(favs);
+                    updateFavoritesUI();
+                    // Favori sayısını güncelle
+                    updateFavoriteCount();
+                });
+            }
+
+            // Portfolyo favori butonlarını ayarla
+            document.querySelectorAll('.portfolio-item').forEach((item, idx) => {
+                const btn = item.querySelector('.portfolio-fav-btn');
+                if (btn) {
+                    const img = item.querySelector('img')?.src || '';
+                    const title = item.querySelector('.portfolio-overlay h3')?.textContent || '';
+                    const desc = item.querySelector('.portfolio-overlay p')?.textContent || '';
+                    const id = 'portfolio-' + idx + '-' + img;
+                    // Yıldızın dolu/boş olmasını favorilere göre ayarla
+                    const favs = getFavorites();
+                    if (favs.find(fav => fav.id === id)) {
+                        btn.querySelector('i').classList.remove('far');
+                        btn.querySelector('i').classList.add('fas');
+                    } else {
+                        btn.querySelector('i').classList.remove('fas');
+                        btn.querySelector('i').classList.add('far');
+                    }
+                    handleFavoriteButton(btn, {id, img, title, desc});
+                }
+            });
+
+            // Hizmet favori butonlarını ayarla
+            document.querySelectorAll('.service-card-container').forEach((item, idx) => {
+                const btn = item.querySelector('.favorite-btn');
+                if (btn) {
+                    const title = item.querySelector('.service-title')?.textContent || '';
+                    const desc = item.querySelector('.service-description')?.textContent || '';
+                    const img = item.querySelector('.service-icon i') ? '' : '';
+                    const id = 'service-' + idx + '-' + title;
+                    // Yıldızın dolu/boş olmasını favorilere göre ayarla
+                    const favs = getFavorites();
+                    if (favs.find(fav => fav.id === id)) {
+                        btn.querySelector('i').classList.remove('far');
+                        btn.querySelector('i').classList.add('fas');
+                    } else {
+                        btn.querySelector('i').classList.remove('fas');
+                        btn.querySelector('i').classList.add('far');
+                    }
+                    handleFavoriteButton(btn, {id, img, title, desc});
+                }
+            });
+
+            // Profil favoriler sekmesini ilk yüklemede güncelle
+            updateFavoritesUI();
+
+            // Portfolyo filtreleme
+            const portfolioFilterBtns = document.querySelectorAll('.portfolio-filters button');
+            portfolioFilterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    portfolioFilterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    const filter = btn.getAttribute('data-filter');
+                    document.querySelectorAll('.portfolio-item').forEach(item => {
+                        if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                            item.style.display = '';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Paket kartlarını filtrele
+            function filterServicePackages(service) {
+              document.querySelectorAll('.service-package').forEach(pkg => {
+                if (service === 'all' || pkg.getAttribute('data-service') === service) {
+                  pkg.style.display = '';
+                } else {
+                  pkg.style.display = 'none';
+                }
+              });
+            }
+            document.querySelectorAll('.service-categories button').forEach(btn => {
+              btn.addEventListener('click', function() {
+                filterServicePackages(btn.getAttribute('data-service'));
+              });
+            });
+            filterServicePackages('all');
+            // Paket rezervasyon
+            function getReservations() {
+              return JSON.parse(localStorage.getItem('reservations') || '[]');
+            }
+            function setReservations(rez) {
+              localStorage.setItem('reservations', JSON.stringify(rez));
+            }
+            function updateReservationsUI() {
+              const rezContainer = document.getElementById('profile-reservations');
+              if (!rezContainer) return;
+              const rezs = getReservations();
+              let html = '';
+              if (rezs.length === 0) {
+                html = '<h4>Rezervasyonlarım</h4><p>Henüz rezervasyonunuz yok.</p>';
+              } else {
+                html = '<h4>Rezervasyonlarım</h4><ul class="list-group">';
+                rezs.forEach(r => {
+                  html += `<li class="list-group-item">${r.date} - ${r.packageName}</li>`;
+                });
+                html += '</ul>';
+              }
+              rezContainer.innerHTML = html;
+            }
+            document.querySelectorAll('.reserve-package-btn').forEach(btn => {
+              btn.addEventListener('click', function() {
+                const card = btn.closest('.card');
+                const packageName = card.querySelector('.card-header').textContent;
+                const date = new Date();
+                const dateStr = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()}`;
+                const rezs = getReservations();
+                rezs.push({date: dateStr, packageName});
+                setReservations(rezs);
+                updateReservationsUI();
+                alert(`${packageName} için bugüne rezervasyonunuz alındı!`);
+              });
+            });
+            updateReservationsUI();
+
+            // 2. Favori sayısını güncelleyen fonksiyon
+            function updateFavoriteCount() {
+              const favs = getFavorites();
+              const favCountEl = document.getElementById('favoriteCount');
+              if (favCountEl) {
+                favCountEl.textContent = `(${favs.length})`;
+              }
+              // Profil istatistiklerinde de göster
+              const favStat = document.querySelector('.profile-stats .stat-item:nth-child(2) .stat-value');
+              if (favStat) {
+                favStat.textContent = favs.length;
+              }
+            }
+        });
+        </script>
+</main>
+<!-- Login Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title">Giriş Yap</h5>
+<button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+</div>
+<div class="modal-body">
+<form id="loginForm">
+<div class="mb-3">
+<input class="form-control" name="email" placeholder="E-posta" required="" type="email"/>
+</div>
+<div class="mb-3">
+<input class="form-control" name="password" placeholder="Şifre" required="" type="password"/>
+</div>
+<button class="btn btn-primary w-100" type="submit">Giriş Yap</button>
+</form>
+<div class="text-center mt-3">
+<p>Hesabınız yok mu? <a href="#" id="showRegister">Kayıt Ol</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Register Modal -->
+<div class="modal fade" id="registerModal" tabindex="-1">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title">Kayıt Ol</h5>
+<button class="btn-close" data-bs-dismiss="modal" type="button"></button>
+</div>
+<div class="modal-body">
+<form id="registerForm">
+<div class="mb-3">
+<input class="form-control" name="name" placeholder="Ad Soyad" required="" type="text"/>
+</div>
+<div class="mb-3">
+<input class="form-control" name="email" placeholder="E-posta" required="" type="email"/>
+</div>
+<div class="mb-3">
+<input class="form-control" name="password" placeholder="Şifre" required="" type="password"/>
+</div>
+<div class="mb-3">
+<input class="form-control" name="password2" placeholder="Şifre Tekrar" required="" type="password"/>
+</div>
+<button class="btn btn-primary w-100" type="submit">Kayıt Ol</button>
+</form>
+<div class="text-center mt-3">
+<p>Zaten hesabınız var mı? <a href="#" id="showLogin">Giriş Yap</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+// --- HİZMETLER FİLTRELEME KODU BAŞLANGIÇ ---
+function filterServicePackages(service) {
+  // Fiyat karşılaştırma tabloları
+  document.querySelectorAll('.service-compare').forEach(tab => {
+    if (service === 'all' || tab.getAttribute('data-service') === service) {
+      tab.style.display = '';
+    } else {
+      tab.style.display = 'none';
+    }
+  });
+  // Paket kartları
+  document.querySelectorAll('.service-package').forEach(pkg => {
+    if (service === 'all' || pkg.getAttribute('data-service') === service) {
+      pkg.style.display = '';
+    } else {
+      pkg.style.display = 'none';
+    }
+  });
+}
+document.querySelectorAll('.service-categories button').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.service-categories button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    filterServicePackages(btn.getAttribute('data-service'));
+  });
+});
+filterServicePackages('all');
+// --- HİZMETLER FİLTRELEME KODU SONU ---
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".favorite-btn i").forEach(function (icon) {
+        icon.addEventListener("click", function (e) {
+            e.preventDefault();
+            if (icon.classList.contains("far")) {
+                icon.classList.remove("far");
+                icon.classList.add("fas");
+            } else {
+                icon.classList.remove("fas");
+                icon.classList.add("far");
+            }
+        });
+    });
+});
+</script>
+</body>
+</html>
